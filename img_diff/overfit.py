@@ -16,6 +16,9 @@ dataset = ImgDiffDataset(data_dir, outputs_file)
 dataloader = DataLoader(dataset, batch_size=4, num_workers=4)
 net = ImgDiffNet()
 
+device = torch.device("cuda:0")
+net = net.to(device)
+
 criterion = nn.MSELoss()
 learning_rate = 0.001
 optimizer = optim.Adam(net.parameters(), lr=learning_rate)
@@ -33,8 +36,8 @@ for i_batch, sample_batched in enumerate(dataloader):
     # print(i_batch, sample_batched)
 
     # print(sample_batched['image'].shape)
-    inputs = sample_batched['image']
-    labels = sample_batched['speed']
+    inputs = sample_batched['image'].to(device)
+    labels = sample_batched['speed'].to(device)
     labels = labels.view(-1, 1)
 
     # ret = net(sample_batched['image'])

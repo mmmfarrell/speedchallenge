@@ -1,2 +1,4 @@
 data/train
 data/test
+
+*.pyc
